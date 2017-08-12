@@ -7,9 +7,26 @@ import { WeatherProvider } from '../../providers/weather/weather';
   templateUrl: 'home.html'
 })
 export class HomePage {
+    weather: any;
+    location:{
+        city: string,
+        state: string
+    }
 
   constructor(public navCtrl: NavController, private WP: WeatherProvider) {
 
+  }
+
+  ionViewWillEnter(){
+      this.location={
+          city: 'Miami',
+          state: 'FL'
+      }
+
+      this.WP.getWeather(this.location.city, this.location.state)
+      .subscribe(weather => {
+          this.weather = weather.current_observation;
+      });
   }
 
 }
